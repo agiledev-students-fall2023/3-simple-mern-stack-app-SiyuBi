@@ -21,6 +21,7 @@ mongoose
 // load the dataabase models we want to deal with
 const { Message } = require('./models/Message')
 const { User } = require('./models/User')
+const { About } = require('./models/About');
 
 // a route to handle fetching all messages
 app.get('/messages', async (req, res) => {
@@ -77,6 +78,20 @@ app.post('/messages/save', async (req, res) => {
     })
   }
 })
+
+// Route to get about data
+router.get('/about', async (req, res) => {
+  try {
+    const aboutData = await About.findOne(); // Assuming you only have one about entry in your database
+    res.json(aboutData);
+  } catch (error) {
+    console.error(error);
+    return res.status(400).json({
+      error: err,
+      status: 'failed to save the message to the database',
+    })
+  }
+});
 
 // export the express app we created to make it available to other modules
 module.exports = app // CommonJS export style!
