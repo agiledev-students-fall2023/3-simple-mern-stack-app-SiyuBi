@@ -7,8 +7,10 @@ const About = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('/api/about'); // Assuming this is the correct route
-        setAboutData(response.data);
+        const response = await axios.get(`${process.env.REACT_APP_SERVER_HOSTNAME}/about`).then(response => {
+            setAboutData(response.data.aboutData)
+            
+          })
       } catch (error) {
         console.error(error);
       }
@@ -24,10 +26,12 @@ const About = () => {
   return (
     <div className="About">
       <h1>About</h1>
-      {aboutData.paragraphs.map((paragraph, index) => (
-        <p key={index}>{paragraph}</p>
-      ))}
-      <img src={aboutData.picture} />
+      <br></br>
+        <p>{aboutData.paragraph}</p>
+        <br></br>
+      {/* <img src={require(aboutData.picture)} /> */}
+      <img src={require(`./${aboutData.picture}`)} height={'400px'}/>
+      
     </div>
   );
 };

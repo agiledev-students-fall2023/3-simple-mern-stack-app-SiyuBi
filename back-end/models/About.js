@@ -16,7 +16,6 @@ const aboutSchema = new Schema(
     timestamps: true,
   }
 )
-
 // create mongoose Model
 const About = mongoose.model('About', aboutSchema)
 

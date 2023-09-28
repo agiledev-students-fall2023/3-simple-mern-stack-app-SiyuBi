@@ -79,19 +79,27 @@ app.post('/messages/save', async (req, res) => {
   }
 })
 
-// Route to get about data
-router.get('/about', async (req, res) => {
+// a route to handle about
+app.get('/about', async (req, res) => {
+  // load all messages from database
   try {
-    const aboutData = await About.findOne(); // Assuming you only have one about entry in your database
-    res.json(aboutData);
-  } catch (error) {
-    console.error(error);
-    return res.status(400).json({
+    // await About.create({
+    //   paragraph: "My name is Siyu Bi. I'm a senior at NYU. 'Elizabeth', 'The Phantom of the Opera', 'Hamilton', 'Six', and 'The Book of Mormon' are all fantastic musicals.", 
+    //   picture: 'my_picture.jpg'
+    // })
+    const aboutData = await About.findOne()
+    res.json({
+      aboutData: aboutData,
+      status: 'all good',
+    })
+  } catch (err) {
+    console.error(err)
+    res.status(400).json({
       error: err,
-      status: 'failed to save the message to the database',
+      status: 'failed to retrieve about from the database',
     })
   }
-});
+})
 
 // export the express app we created to make it available to other modules
 module.exports = app // CommonJS export style!
